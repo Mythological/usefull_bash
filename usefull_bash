@@ -61,3 +61,10 @@ disown, делаем следующее: запущенный процесс о�
 ввода будут подставляться параметры предыдущих команд, начиная от недавно введенных к старым.
 
 sudo !! -Запуск последней команды под root.
+
+arecord -f cd -t raw | oggenc - -r | ssh <user>@<remotehost> mplayer -  -send audio to remote host
+
+ffmpeg -f alsa -ac 1 -i hw:3 -f ogg - \
+    | ssh <user>@<remotehost> mplayer - -idle -demuxer ogg  - same
+
+disown -a && exit  - Close shell keeping all subprocess runniung
