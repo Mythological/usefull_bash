@@ -68,3 +68,9 @@ ffmpeg -f alsa -ac 1 -i hw:3 -f ogg - \
     | ssh <user>@<remotehost> mplayer - -idle -demuxer ogg  - same
 
 disown -a && exit  - Close shell keeping all subprocess runniung
+
+!:-    Insert the last command without the last argument 
+
+awk '!x[$0]++' <file>   Remove duplicate entries in a file without sorting.
+
+
