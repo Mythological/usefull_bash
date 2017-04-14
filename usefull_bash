@@ -73,4 +73,30 @@ disown -a && exit  - Close shell keeping all subprocess runniung
 
 awk '!x[$0]++' <file>   Remove duplicate entries in a file without sorting.
 
+sudo grep -l 109 /etc/asterisk/*
 
+fc - save last command to file (open editor and paste it)
+
+useradd -m -s /bin/bash -g users s.levin
+passwd s.levin
+usermod -a -G wheel s.levin
+
+Alt + * inserts all possible completions, which is particularly helpful, say, if you've just entered a potentially 
+destructive command with wildcards:
+rm -r source/d*.c Alt + *
+rm -r source/delete_me.c source/do_not_delete_me.c
+
+Выполнять команду до успешного выполнения.
+while true
+do
+ping -c 1 ya.ru > /dev/null 2>&1 && break
+done;
+
+fsck -fy /dev/sdc1  проверка и удаление ошибок
+
+One which I often find useful is using the searches with a comment #.
+So if I have quite a long command that I may need to use again. I would:
+ 
+ $ {long command} #shortcut 
+
+Then use Ctrl+R to get the reverse search and look for #shortcut or just shortcut.
