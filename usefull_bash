@@ -100,3 +100,9 @@ So if I have quite a long command that I may need to use again. I would:
  $ {long command} #shortcut 
 
 Then use Ctrl+R to get the reverse search and look for #shortcut or just shortcut.
+
+Backup all MySQL Databases to individual files:
+for I in $(mysql -e 'show databases' -s --skip-column-names); do mysqldump $I | gzip > "$I.sql.gz"; done
+
+Show apps that use internet connection at the moment
+lsof -P -i -n | cut -f 1 -d " "| uniq | tail -n +2
