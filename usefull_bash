@@ -109,31 +109,62 @@ lsof -P -i -n | cut -f 1 -d " "| uniq | tail -n +2
 fsck -fy /dev/sdc1   проверка и исправление ошибок
 
 Search "wordA" AND "wordB" AND NOT ("wordC" OR "wordD") in VIM
-
 /\v^(.*wordA)&(.*wordB)&(.*wordC|.*wordD)@!
-Find the files in the current directory and subdirectory and then delete them
 
+Find the files in the current directory and subdirectory and then delete them
 find . | xargs grep -l "string" | awk '{print "rm "$1}' > doit.sh
 gvim doit.sh // check for murphy and his law
 source doit.sh
+
 Specify the file type
-
 find . -name "*.sas" -o -name "\*.log" | xargs grep -l "string" | awk '{print "rm "$1}' > doit.sh
-Search two strings in files
 
+Search two strings in files
 grep "string1.\*string2 | string2 .\* string1" *.sas .
 or
-
 grep "string1" \*.sas | grep "string2"
+
 Search in VIM with word1 and without word2
-
 /word1 \\( .\*word2\\) /i \@!
+
 Remove unix return ( ^M ) in Vim
-
 :%s/\r\(\n\)/\1/g
-Close all buffers:
 
+Close all buffers:
 :qall
 or
 :qwall
 >>>>>>> f73370695d0e4e31d3c1b279c374fb27ea0a2b6d
+
+Print files extensions in folder
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u 
+
+*.webm only mv to 
+sudo rsync -avzm --include=*/ --include=*.webm --exclude=* /home/Serg/sda1/Photos ./Video
+
+mysql .....65.77
+use pdns
+select * from domains where notified_serial=2017092501;
+delete from domains where id=86332;
+delete from records where domain_id=86332;
+
+virt-install --virt-type=kvm --name FreePBX --ram 4096 --vcpus=1 --os-variant centos7.0 --os-type linux --hvm --cdrom=/var/lib/libvirt/boot/SNG7-FPBX-64bit-1805-1.iso --network bridge=br0,model=virtio --graphics vnc --soundhw=ac97 --disk path=/home/Serg/sda1/virtlib/images/FreePBX.img,size=128,bus=virtio
+
+virt-install --virt-type=kvm --name centos --ram 4096 --vcpus=1 --os-variant generic --os-type linux --hvm --cdrom=/var/lib/libvirt/boot/CentOS-7-x86_64-Minimal-1804.iso --network bridge=br0,model=virtio --graphics vnc --soundhw=ac97 --disk path=/home/Serg/sda1/virtlib/images/centos.img,size=128,bus=virtio
+
+virt-install --virt-type=kvm --name kali --ram 4096 --vcpus=1 --os-variant generic --os-type linux --hvm --cdrom=/var/lib/libvirt/boot/kali-linux-mate-2017.2-amd64.iso --network bridge=br0,model=virtio --graphics vnc --soundhw=ac97 --disk path=/home/Serg/sda1/virtlib/images/kali.img,size=128,bus=virtio
+
+Ssh -p 18765 user@server.ru “sudo /usr/sbin/tcpdump -i br0 -s0 -U -w - ‘port 5060’” | wireshark -k -i -
+ssh root@172.16.18.249 tcpdump -i any -U -s0 -w - 'udp port 5060 or udp portrange 10000-20000' | wireshark -k -i -
+
+rsync -axHvP --delete --exclude-from=/root/exclude / s.levin@ip.ru:/home/
+/root/exclude 
+/sys
+/dev
+/proc
+/mnt
+/media
+/tmp
+/var/cash
+/var/tmp
+/swap
