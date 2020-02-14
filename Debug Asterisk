@@ -1,0 +1,33 @@
+ Полезные команды для диагностики и включение debug в Asterisk
+
+Для того, чтобы включить Debug в asterisk, то переходим в консоль Asterisk  и выполняем команды:
+#asterisk -r
+asterisk*CLI> core set debug 5
+asterisk*CLI>core set verbose 5 
+asterisk*CLI>sip set debug peer sipnet
+asterisk*CLI>sip set debug ip 192.168.1.1
+
+После завершения работ, обязательно отключайте Debug:
+asterisk*CLI> core set debug off 
+asterisk*CLI> core set verbose off
+
+Включить полное логирование в файл:
+nano /etc/asterisk/logger.conf  и расcкомментируем full => notice,warning,error,debug,verbose,dtmf,fax
+Применяем настройки для логов:
+asterisk*CLI> logger reload
+Если не нужно полное логирование, обязательно отключаем, т. к. файл будет очень большого размера.
+
+Иногда нужно отследить трафик, для этого можно снять дамп трафика c сетевого интерфейса
+#tcpdump -i eth0 -s 0 -w /opt/voip.cap host 192.168.1.1
+
+Фильтр для поиска нужной информации по логу, в данном случае ищем - get a frame from channel:, меняете и ищете, что нужно вам.
+#grep -rnw '/var/log/asterisk/full' -e 'get a frame from channel:'
+
+Применение изменений в extentions.conf и users.conf
+#asterisk -r
+asterisk*CLI>dialplan reload
+и 
+asterisk*CLI>sip reload
+asterisk*CLI>module reload chan_sip.so
+
+#http://itvdv.blogspot.com/2018/04/cli-core-set-debug-off-cli-core-set.html
