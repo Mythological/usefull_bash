@@ -1,0 +1,33 @@
+    1  sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
+    2  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    3  yum install -y kernel-devel kernel-headers
+    4  yum install -y e2fsprogs-devel  keyutils-libs-devel krb5-devel libogg libselinux-devel libsepol-devel libxml2-devel libtiff-devel gmp php-pear php php-gd php-mysql php-pdo php-mbstring ncurses-devel mysql-connector-odbc unixODBC unixODBC-devel audiofile-devel libogg-devel openssl-devel zlib-devel  perl-DateManip sox git wget net-tools psmisc
+    5  yum install -y gcc gcc-c++ make gnutls-devel libxml2-devel ncurses-devel subversion doxygen texinfo curl-devel net-snmp-devel neon-devel  uuid-devel libuuid-devel sqlite-devel sqlite speex-devel gsm-devel libtool libtool-ltdl libtool-ltdl-devel libsrtp libsrtp-devel xmlstarlet
+    6  yum install -y gcc gcc-c++ make gnutls-devel libxml2-devel ncurses-devel subversion doxygen texinfo curl-devel net-snmp-devel neon-devel  uuid-devel libuuid-devel sqlite-devel sqlite speex-devel gsm-devel libtool libtool-ltdl libtool-ltdl-devel libsrtp libsrtp-devel xmlstarlet
+    7   yum update -y
+    8  reboot
+    9   yum -y install mariadb-server mariadb mariadb-devel
+   10   systemctl start mariadb.service
+   11  systemctl enable mariadb.service
+   12   mysql_secure_installation
+   13   pear uninstall db
+   14  pear install db-1.7.14
+   17  cd /usr/src &&   wget http://sourceforge.net/projects/lame/files/lame/3.98.4/lame-3.98.4.tar.gz && wget http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz && wget http://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz && wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-13-current.tar.gz && echo ok
+   18  cd /usr/src &&  tar zxvf lame-3.98.4.tar.gz &&  cd lame-3.98.4 &&  ./configure &&  make &&  make install 
+   19  yum install "kernel-devel-uname-r == $(uname -r)"
+   20  cd /usr/src &&  tar xvfz dahdi-linux-complete-current.tar.gz &&  cd dahdi-linux-complete-* &&  make all &&  make install &&  make config
+   21  make install-config
+   22  cd /usr/src &&  tar xvfz libpri-*.tar.gz &&  cd /usr/src/libpri-* &&  make &&  make install
+   24   cd /usr/src && wget http://www.digip.org/jansson/releases/jansson-2.5.tar.gz
+   25  tar zvxf jansson-2.5.tar.gz &&  cd jansson-2.5 &&  ./configure --prefix=/usr/ &&  make clean &&  make &&  make install &&  ldconfig
+   27  cd /usr/src && tar xvfz asterisk-13*.tar.gz && cd asterisk-13.* && ./configure --libdir=/usr/lib64 --with-pjproject-bundled && contrib/scripts/get_mp3_source.sh && make menuselect
+   28  yum install bzip2
+   29  cd /usr/src && tar xvfz asterisk-13*.tar.gz && cd asterisk-13.* && ./configure --libdir=/usr/lib64 --with-pjproject-bundled && contrib/scripts/get_mp3_source.sh && make menuselect
+   30  contrib/scripts/install_prereq install
+   31  cd /usr/src && tar xvfz asterisk-13*.tar.gz && cd asterisk-13.* && ./configure --libdir=/usr/lib64 --with-pjproject-bundled && contrib/scripts/get_mp3_source.sh && make menuselect
+   32  make
+   33  make install && make config && ldconfig
+   34   sed -i 's/ASTARGS=""/ASTARGS="-U asterisk"/g'  /usr/sbin/safe_asterisk
+   35  useradd -m asterisk && chown asterisk.asterisk /var/run/asterisk && chown -R asterisk.asterisk /etc/asterisk && chown -R asterisk.asterisk /var/{lib,log,spool}/asterisk && chown -R asterisk.asterisk /usr/lib64/asterisk 
+   36  systemctl enable asterisk
+   37  systemctl start asterisk
