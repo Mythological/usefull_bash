@@ -1,5 +1,5 @@
 /etc/fstab
-tmpfs /var/spool/asterisk/ramdisk             tmpfs   size=512m,uid=995(asterisk),gid=995(asterisk)       0 0
+tmpfs /var/spool/asterisk/ramdisk                tmpfs   rw,size=512m,uid=995,gid=995,nosuid,noexec,nodev,relatime,mode=1700       0 0
 
 mkdir /var/spool/asterisk/ramdisk
 chown -R asterisk. /var/spool/asterisk/ramdisk
@@ -8,7 +8,7 @@ mount -a
 /etc/asterisk/asterisk.conf
 [options]
 cache_record_files = yes
-record_cache_dir = /media/ramdisk/
+record_cache_dir = /var/spool/asterisk/ramdisk/
 verbose=9
 highpriority=yes
 hideconnect=yes
