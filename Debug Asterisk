@@ -1,6 +1,8 @@
 ping sip.zadarma.com -s 256 -i 0.02
 mtr sip.zadarma.com
 mtr -rw -c50 172.16.44.44
+watch -n 1 'asterisk -rx "iax2 show channels"'
+watch -n 1 'asterisk -rx "sip show channelstats"'
  
  Полезные команды для диагностики и включение debug в Asterisk
 
