@@ -24,7 +24,6 @@ tmp to tmpfs
 
 mkdir /dev/shm/tmp
 mkdir /dev/shm/asterisktmp
-chmod /dev/shm/tmp
 chmod 1777 /dev/shm/tmp
 chmod 1777 /dev/shm/asterisktmp
 mount --bind /dev/shm/tmp /tmp
