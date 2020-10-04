@@ -5,22 +5,24 @@ add chain=prerouting action=mark-connection protocol=udp port=53 connection-stat
 add chain=postrouting action=mark-connection protocol=udp port=53 connection-state=new new-connection-mark="DNS"
 add chain=postrouting action=mark-packet passthrough=no connection-mark="DNS" new-packet-mark="DNS"
 
-# Mark all VoIP traffic. We've set all our equiptment to use SIP 5060,5061 and RTP 10000-20000.
-# add chain=prerouting action=mark-connection protocol=udp port=5060,5061,5160,10000-20000 new-connection-mark="VOIP" comment="VOIP"
-# add chain=prerouting action=mark-packet passthrough=no connection-mark="VOIP" new-packet-mark="VOIP"
+add chain=prerouting action=mark-connection protocol=udp port=5060,5061,5160,10000-20000 new-connection-mark="VOIP" comment="VOIP"
+add chain=prerouting action=mark-packet passthrough=no connection-mark="VOIP" new-packet-mark="VOIP"
 
-# Mark everything else that has no mark applied.
+add chain=prerouting action=mark-connection protocol=tcp port=18769 new-connection-mark="NEXTCLOUD" comment="NEXTCLOUD"
+add chain=prerouting action=mark-packet passthrough=no connection-mark="NEXTCLOUD" new-packet-mark="NEXTCLOUD"
+
 add chain=prerouting action=mark-connection connection-mark=no-mark new-connection-mark="OTHER" comment="OTHER"
 add chain=prerouting action=mark-packet passthrough=no connection-mark="OTHER" new-packet-mark="OTHER"
 
-
 /queue tree
-add name="MASTER_UP" parent=ether1-gateway queue=default max-limit=3000k
-add name="MASTER_DOWN" parent=bridge-local queue=default max-limit=50000k
+add name="MASTER_UP" parent=ether5-slave-local queue=default max-limit=38M
+add name="MASTER_DOWN" parent=bridge-local queue=default max-limit=38M
 
-add name="VOIP_U" parent="MASTER_UP" packet-mark="VOIP" queue=default limit-at=200k max-limit=2850k priority=1
-add name="VOIP_D" parent="MASTER_DOWN" packet-mark="VOIP" queue=default limit-at=200k max-limit=45000k priority=1
-add name="DNS_U" parent="MASTER_UP" packet-mark="DNS" queue=default limit-at=200k max-limit=2850k priority=3
-add name="DNS_D" parent="MASTER_DOWN" packet-mark="DNS" queue=default limit-at=2000k max-limit=45000k priority=3
-add name="OTHER_U" parent="MASTER_UP" packet-mark="OTHER" queue=default limit-at=200k max-limit=3000k priority=8
-add name="OTHER_D" parent="MASTER_DOWN" packet-mark="OTHER" queue=default limit-at=2000k max-limit=50000k priority=8
+add name="VOIP_U" parent="MASTER_UP" packet-mark="VOIP" queue=default limit-at=1M max-limit=2M priority=1
+add name="VOIP_D" parent="MASTER_DOWN" packet-mark="VOIP" queue=default limit-at=1M max-limit=2M priority=1
+add name="DNS_U" parent="MASTER_UP" packet-mark="DNS" queue=default limit-at=10M max-limit=20M priority=3
+add name="DNS_D" parent="MASTER_DOWN" packet-mark="DNS" queue=default limit-at=10M max-limit=20M priority=3
+add name="NEXTCLOUD_U" parent="MASTER_UP" packet-mark="NEXTCLOUD" queue=default limit-at=1M max-limit=2M priority=4
+add name="NEXTCLOUD_D" parent="MASTER_DOWN" packet-mark="NEXTCLOUD" queue=default limit-at=1M max-limit=2M priority=4
+add name="OTHER_U" parent="MASTER_UP" packet-mark="OTHER" queue=default limit-at=15M max-limit=37M priority=8
+add name="OTHER_D" parent="MASTER_DOWN" packet-mark="OTHER" queue=default limit-at=15M max-limit=37M priority=8
