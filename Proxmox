@@ -1,0 +1,2 @@
+qm destroy <vmid>
+qmrestore --storage local-lvm vzdump-qemu-103-2011_01_20-23_27_17.tgz 103
