@@ -168,3 +168,7 @@ rsync -axHvP --delete --exclude-from=/root/exclude / s.levin@ip.ru:/home/
 /var/cash
 /var/tmp
 /swap
+
+
+tcpdump -i eth0 ip[1]==96 -vvvvv  # Capture SIP packet with cs3 (24) DSCP MARK
+tcpdump -i eth0 ip[1]==184 -vvvvv  # Capture SIP packet with ef (46) DSCP MARK
