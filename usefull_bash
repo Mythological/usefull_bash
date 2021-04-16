@@ -172,3 +172,6 @@ rsync -axHvP --delete --exclude-from=/root/exclude / s.levin@ip.ru:/home/
 
 tcpdump -i eth0 ip[1]==96 -vvvvv  # Capture SIP packet with cs3 (24) DSCP MARK
 tcpdump -i eth0 ip[1]==184 -vvvvv  # Capture SIP packet with ef (46) DSCP MARK
+
+# объединение raw в один
+sox -t raw -r 8000 -b 16 -c 1 -e signed Hold_Wait.raw -t raw -r 8000 -b 16 -c 1 -e signed beeven.raw -t raw -r 8000 -b 16 -c 1 -e signed Hold_Wait.raw -t raw -r 8000 -b 16 -c 1 -e signed  mort_1.raw -t raw -r 8000 -b 16 -c 1 -e signed  Hold_Wait.raw -t raw -r 8000 -b 16 -c 1 -e signed  zaulute.raw Hold_Wait_Bhen_Mort_Zaer.raw
