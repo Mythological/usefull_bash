@@ -1,5 +1,7 @@
 https://pve.proxmox.com/wiki/Resize_disks
 
+делать отсюда:
+
 fdisk -l /dev/vda | grep ^/dev
 GPT PMBR size mismatch (67108863 != 335544319) will be corrected by w(rite).
 /dev/vda1      34     2047     2014 1007K BIOS boot
@@ -40,3 +42,5 @@ Enlarge the logical volume and the filesystem (the file system can be mounted, w
 lvresize --size +20G --resizefs /dev/xxxx/root #This command will increase the partition up by 20GB
 
 lvresize --extents +100%FREE --resizefs /dev/xxxx/root #Use all the remaining space on the volume group
+
+до сюда.
