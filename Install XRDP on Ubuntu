@@ -6,7 +6,7 @@
 
 4.	sudo apt-get install xorgxrdp
 
-5.	nano /etc/polkit-1/localauthority.conf.d/02-allow-colord.conf
+5.	sudo vi /etc/polkit-1/localauthority.conf.d/01-allow-colord.conf
 
 6.	Copy the polkit
 
