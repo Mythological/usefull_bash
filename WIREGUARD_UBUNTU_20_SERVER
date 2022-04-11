@@ -103,3 +103,7 @@ $ sudo systemctl start wg-quick@wg0.service
 Make sure that the service is active an running. You can check this by running the following command.
 
 $ sudo systemctl status wg-quick@wg0.service
+
+
+$ sudo wg set wg0 peer YOUR_CLIENTS_PUBLIC_KEY allowed-ips 192.168.1.10
+
