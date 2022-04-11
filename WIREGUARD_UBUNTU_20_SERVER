@@ -107,3 +107,15 @@ $ sudo systemctl status wg-quick@wg0.service
 
 $ sudo wg set wg0 peer YOUR_CLIENTS_PUBLIC_KEY allowed-ips 192.168.1.10
 
+На клиенте
+
+[Interface]
+PrivateKey = CLIENT_PRIVATE_KEY
+Address = 192.168.1.12/24
+DNS = 8.8.8.8, 1.1.1.1
+
+[Peer]
+PublicKey = Server_Public_key
+AllowedIPs = 0.0.0.0/0
+Endpoint = IP_SERVER:51820
+
