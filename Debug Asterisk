@@ -1,5 +1,7 @@
 tcpdump -i eth0 ip[1]==96 -vvvvv  # Capture SIP packet with cs3 (24) DSCP MARK
 tcpdump -i eth0 ip[1]==184 -vvvvv  # Capture SIP packet with ef (46) DSCP MARK
+tcpdump -nnvi any -s0 host 82.13.41.31 and port 5060 -w reg_100.pcap
+sngrep -I reg_100.pcap
 
 
 ------------------------------IPERF Simulate call--------------------------------
