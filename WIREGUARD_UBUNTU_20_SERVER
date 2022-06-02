@@ -28,7 +28,7 @@ Write the following.
 [Interface]
 PrivateKey = serves_generated_private_key
 Address = 192.168.1.1/24
-ListenPort = 51820
+ListenPort = 51280
 SaveConfig = true
 Save the file.
 
@@ -69,12 +69,12 @@ Open the config file.
 $ sudo nano /etc/wireguard/wg0.conf
 At the bottom of the file. Add the following:
 
-PostUp = iptables -A FORWARD -i $SERVER_WG_NIC -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NICv4 -j MASQUERADE; iptables -A FORWARD -i $SERVER_PUB_NICv4 -j ACCEPT; iptables -A INPUT -p udp -m udp --dport $SERVER_PORT -j ACCEPT; 
-PostDown = iptables -D FORWARD -i $SERVER_WG_NIC -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NICv4 -j MASQUERADE; iptables -D FORWARD -i $SERVER_PUB_NICv4 -j ACCEPT; iptables -D INPUT -p udp -m udp --dport $SERVER_PORT -j ACCEPT; 
+PostUp = iptables -A FORWARD -i $SERVER_WG_NIC -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_PUB_NICv4 -j MASQUERADE; iptables -A FORWARD -i $SERVER_PUB_NICv4 -j ACCEPT; iptables -A INPUT -p udp -m udp --dport 51280 -j ACCEPT; 
+PostDown = iptables -D FORWARD -i $SERVER_WG_NIC -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_PUB_NICv4 -j MASQUERADE; iptables -D FORWARD -i $SERVER_PUB_NICv4 -j ACCEPT; iptables -D INPUT -p udp -m udp --dport 51280 -j ACCEPT; 
 
 The PostUp rules will run when the server start the virtual VPN tunnel. The PostDown rules will run when the server stops the virtual VPN tunnel.
 
-The last part of the firewall configuration is to allow the traffic to and from the WireGuard UPD port. The port that we will need to open is 51820. If you have chosen another port make sure to use that one in the following command.
+The last part of the firewall configuration is to allow the traffic to and from the WireGuard UPD port. The port that we will need to open is 51280. If you have chosen another port make sure to use that one in the following command.
 
 $ sudo ufw allow 51280/udp
 After adding the rules we need to disable and re-enable UFW. Now it can load all the changes we made.
@@ -117,5 +117,5 @@ DNS = 8.8.8.8, 1.1.1.1
 [Peer]
 PublicKey = Server_Public_key
 AllowedIPs = 0.0.0.0/0
-Endpoint = IP_SERVER:51820
+Endpoint = IP_SERVER:51280
 
