@@ -1,3 +1,7 @@
 Проброс порта 8006 на локальной машине на порт 1111 удаленной:
 ssh -R 1111:localhost:8006 -i ~/.ssh/id_rsa -p 22 user@93.23.11.34 -f -N
 
+ssh-keygen -t rsa -q -N '' -f ~/.ssh/id_rsa
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub user@remote.com
+
