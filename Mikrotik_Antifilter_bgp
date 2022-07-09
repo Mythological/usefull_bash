@@ -1,0 +1,15 @@
+/routing table
+add fib name=tovpn
+
+/routing bgp template
+set default as=65512 disabled=no hold-time=4m multihop=yes router-id=WAN_IP routing-table=main
+
+/routing bgp connection
+add as=64512 disabled=no hold-time=4m input.filter=bgp_in keepalive-time=1s local.role=ibgp multihop=yes name=antifilter_bgp remote.address=45.154.73.71/32 \
+    router-id=WAN_IP routing-table=main
+    
+/routing filter rule
+add chain=bgp_in disabled=no rule="set gw NAME_OF_VPN_INTERFACE; accept"
+
+
+https://olegon.ru/showthread.php?p=382656
