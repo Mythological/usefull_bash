@@ -82,7 +82,6 @@ https://voxlink.ru/kb/asterisk-configuration/rtcp-control-quality-voip/
 [macro-dialout-trunk-predial-hook] 
 exten => s,1,Set(CHANNEL(hangup_handler_push)=sub-rtcp-handler,s,1)
 
-
 [sub-rtcp-handler]
 exten => s,1,NoOp(Start QoS ${CHANNEL(peername)})
 same => n,Set(TX_PLOS=${CHANNEL(rtpqos,audio,txploss)})
@@ -92,9 +91,10 @@ same => n,Set(RX_COUNT=${CHANNEL(rtpqos,audio,rxcount)})
 same => n,Set(TX_LOSS_PERC=$[${TX_PLOS}*100/${TX_COUNT}])
 same => n,Set(RX_LOSS_PERC=$[${RX_PLOS}*100/${RX_COUNT}])
 same => n,Noop(RX_LOSS_PERC: ${RX_LOSS_PERC} TX_LOSS_PERC: ${TX_LOSS_PERC})
+same => n,Set(TIMECURRENTY=${STRFTIME(${EPOCH},,%Y-%m-%d %H:%M)})
 ;same => n,ExecIf($[$["${RX_LOSS_PERC}" != "0" | "${TX_LOSS_PERC}" != "0"]]?System(/usr/local/bin/sendEmail.pl -f pbx1@company.ru -t info@company.ru -u "Packet Loss on trunk ${CHANNEL(peername)}" -m "RX Packet Loss ${RX_LOSS_PERC} TX Packet Loss ${TX_LOSS_PERC} on trunk ${CHANNEL(peername)}" -o message-charset=UTF-8))
-same => n,ExecIf($[$["${RX_LOSS_PERC}" != "0" | "${TX_LOSS_PERC}" != "0"]]?System(/usr/bin/echo "RX Packet Loss ${RX_LOSS_PERC} TX Packet Loss ${TX_LOSS_PERC} on trunk ${CHANNEL(peername)} ruri: ${CHANNEL(ruri)}" >> /var/log/asterisk/RTCP.log)
-;same => n,System(/usr/bin/echo "RX Packet Loss ${RX_LOSS_PERC} TX Packet Loss ${TX_LOSS_PERC} on trunk ${CHANNEL(peername)} ruri: ${CHANNEL(ruri)}" >> /var/log/asterisk/RTCP.log)
+same => n,ExecIf($[$["${RX_LOSS_PERC}" != "0" | "${TX_LOSS_PERC}" != "0"]]?System(/usr/bin/echo "${TIMECURRENTY} RX Packet Loss ${RX_LOSS_PERC} TX Packet Loss ${TX_LOSS_PERC} on trunk ${CHANNEL(peername)} ruri: ${CHANNEL(ruri)}" >> /var/log/asterisk/RTCP.log)
+;same => n,System(/usr/bin/echo "${TIMECURRENTY} RX Packet Loss ${RX_LOSS_PERC} TX Packet Loss ${TX_LOSS_PERC} on trunk ${CHANNEL(peername)} ruri: ${CHANNEL(ruri)}" >> /var/log/asterisk/RTCP.log)
 same => n,Return()
 
 ---------------------------------------------------------------------------------------------------------------------
