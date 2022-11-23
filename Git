@@ -1,0 +1,14 @@
+On remote server:
+
+su git
+mkdir /home/git/name.git
+cd Alt+.
+git init --bare
+
+On local machine:
+
+git init
+git add .
+git commit -m "First commit"
+git remote add origin git@172.16.13.214:/home/git/name.git
+git push origin master
