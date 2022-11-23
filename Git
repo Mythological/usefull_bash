@@ -12,3 +12,8 @@ git add .
 git commit -m "First commit"
 git remote add origin git@172.16.13.214:/home/git/name.git
 git push origin master
+
+Pushing code to two remotes:
+
+git remote set-url --add --push origin git://original/repo.git
+git remote set-url --add --push origin git://another/repo.git
