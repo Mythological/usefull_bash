@@ -179,3 +179,8 @@ tcpdump -i eth0 ip[1]==184 -vvvvv  # Capture SIP packet with ef (46) DSCP MARK
 sox Wait_Hold_pls.wav --bits 16 --encoding signed-integer --endian little Wait_Hold_pls.raw
 # объединение raw в один
 sox -t raw -r 8000 -b 16 -c 1 -e signed Hold_Wait.raw -t raw -r 8000 -b 16 -c 1 -e signed beeven.raw -t raw -r 8000 -b 16 -c 1 -e signed Hold_Wait.raw -t raw -r 8000 -b 16 -c 1 -e signed  mort_1.raw -t raw -r 8000 -b 16 -c 1 -e signed  Hold_Wait.raw -t raw -r 8000 -b 16 -c 1 -e signed  zaulute.raw Hold_Wait_Bhen_Mort_Zaer.raw
+
+# Найти файлы и зашифровать
+find . -name '*2023*.zst' -exec gpg --encrypt --recipient s@so.ru {} \;
+# Найти зашифрованные и слить в обалко
+find . -name '*zst.gpg' -exec rclone move {} b2:Backup/mox/dump \;
