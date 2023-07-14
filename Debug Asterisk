@@ -55,6 +55,11 @@ asterisk*CLI> logger reload
 
 Иногда нужно отследить трафик, для этого можно снять дамп трафика c сетевого интерфейса
 #tcpdump -i eth0 -s 0 -w /opt/voip.cap host 192.168.1.1
+или в файл
+
+tcpdump -nnvi any -s0 host 82.13.41.31 and port 5060 -w reg_100.pcap
+sngrep -I reg_100.pcap
+------------------------------------------------------------------------------------------------
 
 Фильтр для поиска нужной информации по логу, в данном случае ищем - get a frame from channel:, меняете и ищете, что нужно вам.
 #grep -rnw '/var/log/asterisk/full' -e 'get a frame from channel:'
