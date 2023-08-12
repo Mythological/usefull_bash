@@ -1,0 +1,8 @@
+asterisk -rx "database show" | grep 306
+asterisk -rx "database put AMPUSER/306/recording/out internal no"
+asterisk -rx "database put AMPUSER/306/recording/out external no"
+asterisk -rx "database put AMPUSER/306/recording/in internal no"
+asterisk -rx "database put AMPUSER/306/recording/in external no"
+
+
+for i in {301..305} ; do asterisk -rx "database put AMPUSER/"$i"/recording/out internal no" && sleep 1 && asterisk -rx "database put AMPUSER/"$i"/recording/out external no" && sleep 1 && asterisk -rx "database put AMPUSER/"$i"/recording/in internal no" && sleep 1 && asterisk -rx "database put AMPUSER/"$i"/recording/in external no" ; done
