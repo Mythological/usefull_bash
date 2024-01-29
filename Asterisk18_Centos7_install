@@ -1,0 +1,37 @@
+setenforce 0
+getenforce
+sed -i 's/\(^SELINUX=\).*/\SELINUX=disabled/' /etc/sysconfig/selinux
+sed -i 's/\(^SELINUX=\).*/\SELINUX=disabled/' /etc/selinux/config
+
+systemctl status firewalld
+systemctl disable firewalld
+systemctl mask firewalld
+systemctl stop firewalld
+
+yum -y update
+reboot
+
+getenforce
+systemctl status firewalld
+
+yum install -y tar wget nano
+yum install -y make gcc gcc-c++ newt-devel libxml2-devel sqlite-devel bzip2 libedit-devel libuuid-devel patch jansson-devel openssl-devel 
+
+mkdir -p /usr/src/asterisk
+cd /usr/src/asterisk
+wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-18-current.tar.gz
+tar xvf asterisk-18-current.tar.gz
+cd /usr/src/asterisk/asterisk-*
+uname -r 
+./configure --with-jansson-bundled --libdir=/usr/lib64
+make menuselect
+make
+make install
+make config
+ldconfig
+touch /etc/asterisk/modules.conf           
+
+systemctl enable asterisk
+systemctl start asterisk
+
+asterisk -rvvvvv
